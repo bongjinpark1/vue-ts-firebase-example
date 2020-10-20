@@ -53,7 +53,13 @@ export default class App extends Vue {
 
   // methods
   submit () {
-    console.log(this.form.validate())
+    const firestore = this.$firebase.firestore()
+
+    const docRef = firestore.collection('test').doc()
+
+    docRef.set({
+      value: 1
+    })
   }
 }
 </script>
