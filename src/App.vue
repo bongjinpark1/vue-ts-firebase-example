@@ -59,7 +59,7 @@ export default Vue.extend({
   }),
 
   created () {
-    const ref = this.$firebase.firestore()
+    const firestore = this.$firebase.firestore()
   }
 })
 </script>
