@@ -14,3 +14,5 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig)
 
 Vue.prototype.$firebase = firebase
+
+export default firebase
