@@ -1,44 +1,9 @@
 <template>
   <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
-    >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
-
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
-
-      <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
-    </v-app-bar>
-
     <v-main>
-      <HelloWorld/>
+      <v-form ref="form" @submit.prevent="submit">
+        <v-btn type="submit">submit</v-btn>
+      </v-form>
     </v-main>
   </v-app>
 </template>
@@ -46,20 +11,49 @@
 <script lang="ts">
 import Vue from 'vue'
 import HelloWorld from './components/HelloWorld.vue'
+import { Component, Prop, Ref } from 'vue-property-decorator'
 
-export default Vue.extend({
+@Component<App>({
   name: 'App',
 
   components: {
     HelloWorld
   },
 
-  data: () => ({
-
-  }),
-
   created () {
-    const firestore = this.$firebase.firestore()
+    console.log(this.str)
+    console.log(this.computedStr)
+    console.log(this.propStr)
+    console.log(this.form)
   }
 })
+export default class App extends Vue {
+  // prop
+  @Prop({
+    type: String,
+    required: false,
+    default: () => 'default'
+  })
+  propStr!: string
+
+  // ref
+  @Ref('form') form!: HTMLElement & { validate(): boolean }
+
+  // data
+  str = 'string'
+
+  // computed
+  get computedStr () {
+    return this.str
+  }
+
+  set computedStr (value: string) {
+    this.str = value
+  }
+
+  // methods
+  submit () {
+    console.log(this.form.validate())
+  }
+}
 </script>
